@@ -48,6 +48,12 @@ Adaptive-AI-System-for-Brain-Tumor-Recurrence-Prediction/
 │── .gitignore
 │── models/
 │   └── yolov8_model.pt
+│── static/
+│   ├── glioma_tumor/
+│   ├── meningioma_tumor/
+│   ├── no_tumor/
+│   ├── pituitary_tumor/
+│   └── interface & output/
 └── templates/
     └── index.html
 ```
