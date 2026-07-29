@@ -18,6 +18,7 @@ MODEL_PATH = os.path.join("models", "yolov8_model.pt")
 MODEL_URL = "https://github.com/ultralytics/assets/releases/download/v0.0.0/yolov8n.pt"
 
 ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg"}
+CONFIDENCE_THRESHOLD = 0.6
 
 logging.basicConfig(level=logging.INFO)
 
@@ -48,6 +49,7 @@ ensure_model()
 model = YOLO(MODEL_PATH)
 
 def allowed_file(filename):
+     """Return True if the uploaded file has an allowed image extension."""
     return (
         "." in filename and
         filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -58,6 +60,7 @@ def index():
     return render_template('index.html')
 
 def fig_to_base64():
+    """Convert the Matplotlib figure into a Base64-encoded PNG image."""
     buf = io.BytesIO()
     plt.savefig(buf, format='png', bbox_inches='tight')
     buf.seek(0)
@@ -67,6 +70,7 @@ def fig_to_base64():
 
 @app.route('/upload', methods=['POST'])
 def upload_image():
+     """Handle image upload, run prediction, and display the results."""
     if 'file' not in request.files or request.files['file'].filename.strip() == '':
         return render_template('index.html', error="No file selected.")
 
@@ -103,7 +107,7 @@ def upload_image():
             tumor_type = mapping.get(cls_id % 3, "Glioma")
             probs = {"Glioma": 0.0, "Meningioma": 0.0, "Pituitary Tumor": 0.0, "No Tumor": 0.0}
             probs[tumor_type] = confidence
-            result_message = "Chance of brain tumor recurrence" if confidence > 0.6 else "No recurrence chance"
+            result_message = "Chance of brain tumor recurrence" if confidence > CONFIDENCE_THRESHOLD else "No recurrence chance"
 
         # Bar chart for per-image "probabilities"
         labels = list(probs.keys())
@@ -141,4 +145,4 @@ def health():
 
 if __name__ == '__main__':
     # For local demo only
-    app.run(debug=True)
+    app.run(debug=False)
