@@ -60,7 +60,7 @@ Adaptive-AI-System-for-Brain-Tumor-Recurrence-Prediction/
 - Build REST APIs
 - Deploy on AWS Cloud
 
-## Note
+## 📝 Note
 
 This project is developed for educational and research purposes as part of a B.Tech project.
 
