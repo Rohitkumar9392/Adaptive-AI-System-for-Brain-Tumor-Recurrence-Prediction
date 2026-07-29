@@ -1,28 +1,44 @@
+import base64
+import io
+import logging
+import os
 from flask import Flask, request, render_template
 from ultralytics import YOLO
 from PIL import Image
-import io, base64, os
 import matplotlib
 matplotlib.use("Agg")  # use non-GUI backend for servers
 import matplotlib.pyplot as plt
 
 app = Flask(__name__)
 
-MODEL_PATH = 'yolov8_model.pt'
+MODEL_PATH = "yolov8_model.pt"
+MODEL_URL = "https://github.com/ultralytics/assets/releases/download/v0.0.0/yolov8n.pt"
 
-# Auto-download YOLOv8n if model file is missing
+logging.basicConfig(level=logging.INFO)
+
 def ensure_model():
-    if not os.path.exists(MODEL_PATH):
-        import requests
-        print("Downloading pretrained YOLOv8n model...")
-        url = "https://github.com/ultralytics/assets/releases/download/v0.0.0/yolov8n.pt"
-        r = requests.get(url, timeout=60)
-        r.raise_for_status()
-        with open(MODEL_PATH, "wb") as f:
-            f.write(r.content)
-        print("Download complete -> yolov8_model.pt")
+    """
+    Ensure the YOLO model exists.
+    If it's missing, download it automatically.
+    """
+    if os.path.exists(MODEL_PATH):
+        logging.info("YOLO model found.")
+        return
 
-# Initialize model (download if necessary)
+    logging.warning("YOLO model not found. Downloading...")
+    try:
+        response = requests.get(MODEL_URL, timeout=60)
+        response.raise_for_status()
+
+        with open(MODEL_PATH, "wb") as model_file:
+            model_file.write(response.content)
+
+        logging.info("YOLO model downloaded successfully.")
+
+    except requests.RequestException as e:
+        raise RuntimeError(f"Failed to download YOLO model: {e}")
+
+# Initialize model
 ensure_model()
 model = YOLO(MODEL_PATH)
 
