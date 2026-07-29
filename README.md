@@ -1,8 +1,8 @@
-# 🧠 Neuro Oncology Forecast: Brain Tumor Recurrence Prediction Using ML & DL
+# 🧠 A Hardware-Integrated Multi-Modal Artificial Intelligence System and Method for Real-Time Brain Tumor Recurrence Prediction Using Adaptive Feature Fusion and Clinical Decision Support
 
 ## 📖 Overview
 
-Neuro Oncology Forecast is a machine learning and deep learning–based web application developed as a collaborative B.Tech major project. The system analyzes brain MRI images to assist in brain tumor prediction and provide AI-assisted clinical decision support through a Flask-based web interface.
+The present invention discloses a hardware-integrated multi-modal artificial intelligence system and method for real-time prediction of brain tumor recurrence. The system utilizes medical imaging data and clinical parameters through a structured processing pipeline comprising data acquisition, preprocessing, feature extraction, and adaptive feature fusion. A dual-path architecture extracts features from MRI images using deep learning and from clinical data using machine learning. The extracted features are combined using an adaptive fusion mechanism to enhance prediction accuracy. A hardware-based prediction engine performs real-time inference and generates recurrence probability along with classification output. An explainability module provides visual and statistical insights to improve interpretability. The system enables accurate, scalable, and efficient prediction of tumor recurrence, supporting clinical decision-making and improving patient outcomes.
 
 ## ✨ Features
 
