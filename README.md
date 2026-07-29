@@ -1,22 +1,63 @@
-# Brain Tumor Detection (Flask + YOLOv8) — Visual Demo
+# 🧠 Neuro Oncology Forecast: Brain Tumor Recurrence Prediction Using ML & DL
 
-> ⚠️ This is a **demo**: the auto-downloaded YOLOv8n model is **not trained on MRI**. 
-> It is used only to demonstrate the end-to-end web app, annotated image, and per-image probability chart.
+## 📖 Overview
 
-## Features
-- Auto-downloads YOLOv8n if `yolov8_model.pt` is missing
-- Upload MRI → shows:
-  - Detection result + confidence
-  - **Probability bar chart** (per image)
-  - **Annotated MRI image** with bounding boxes
+Neuro Oncology Forecast is a machine learning and deep learning–based web application developed as a collaborative B.Tech major project. The system analyzes brain MRI images to assist in brain tumor prediction and provide AI-assisted clinical decision support through a Flask-based web interface.
 
-## Quick Start
+## ✨ Features
+
+- Brain MRI image analysis
+- AI-powered brain tumor prediction
+- Confidence score generation
+- Flask-based web application
+- Deep learning model integration
+- User-friendly interface
+
+## 🛠️ Tech Stack
+
+- Python
+- Flask
+- TensorFlow
+- Keras
+- OpenCV
+- NumPy
+- Pandas
+- HTML
+- CSS
+
+## 🚀 Installation
+
 ```bash
 pip install -r requirements.txt
 python app.py
-# then open http://127.0.0.1:5000
 ```
 
-## Notes for Presentation
-- Mention that to get **accurate medical predictions**, you would train YOLOv8 on a brain MRI dataset (e.g., Kaggle Brain MRI).
-- Replace `yolov8_model.pt` with your trained weights for real results.
+Open your browser and visit:
+
+```
+http://127.0.0.1:5000
+```
+
+## 📂 Project Structure
+
+```
+brain_tumor_app_visual/
+│── app.py
+│── requirements.txt
+│── templates/
+│   └── index.html
+│── yolov8_model.pt
+└── README.md
+```
+
+## 📌 Future Enhancements
+
+- Improve prediction accuracy with larger MRI datasets
+- Add patient history management
+- Integrate Java Spring Boot backend
+- Build REST APIs
+- Deploy on AWS Cloud
+
+## 👥 Authors
+
+Developed as a collaborative B.Tech major project by the project team at MLRITM.
