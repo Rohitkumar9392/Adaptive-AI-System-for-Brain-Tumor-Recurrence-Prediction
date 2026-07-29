@@ -11,8 +11,13 @@ import matplotlib.pyplot as plt
 
 app = Flask(__name__)
 
-MODEL_PATH = "yolov8_model.pt"
+# Maximum upload size: 50 MB
+app.config["MAX_CONTENT_LENGTH"] = 50 * 1024 * 1024
+
+MODEL_PATH = os.path.join("models", "yolov8_model.pt")
 MODEL_URL = "https://github.com/ultralytics/assets/releases/download/v0.0.0/yolov8n.pt"
+
+ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg"}
 
 logging.basicConfig(level=logging.INFO)
 
@@ -42,6 +47,12 @@ def ensure_model():
 ensure_model()
 model = YOLO(MODEL_PATH)
 
+def allowed_file(filename):
+    return (
+        "." in filename and
+        filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
+    )
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -62,7 +73,15 @@ def upload_image():
     try:
         # Read image
         file = request.files['file']
-        image = Image.open(file.stream).convert('RGB')
+        if not allowed_file(file.filename):
+            return render_template('index.html', error="Only PNG, JPG, and JPEG files are allowed.")
+        try:
+            image = Image.open(file.stream)
+            image.verify()
+            file.stream.seek(0)
+            image = Image.open(file.stream).convert("RGB")
+        except Exception:
+            return render_template('index.html', error="Invalid or corrupted image.")
 
         # Run inference
         results = model(image)
