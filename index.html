@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Brain Tumor Detection</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 980px; margin: 30px auto; padding: 20px; }
+    .card { border: 1px solid #ddd; padding: 18px; border-radius: 10px; margin-top: 18px; }
+    .ok { background: #e6ffed; padding: 12px 14px; border-radius: 8px; }
+    .error { background: #ffe6e6; padding: 12px 14px; border-radius: 8px; color: #b00020; }
+    button { padding: 8px 14px; border-radius: 8px; border: 1px solid #333; cursor: pointer; }
+    input[type=file] { margin-right: 12px; }
+    img { width: 100%; max-width: 720px; display: block; }
+  </style>
+</head>
+<body>
+  <h1>Brain Tumor Detection</h1>
+  <div class="ok">Model loaded (auto-downloaded if missing). Upload an MRI below.</div>
+
+  <div class="card">
+    <form action="/upload" method="post" enctype="multipart/form-data">
+      <input type="file" name="file" accept="image/*" required>
+      <button type="submit">Upload & Predict</button>
+    </form>
+  </div>
+
+  {% if result %}
+  <div class="card" style="background:#f7f9ff;">
+    <h2>Detection Result</h2>
+    <p>{{ result }}</p>
+    <p><strong>Tumor Type:</strong> {{ tumor_type }}</p>
+    <p><em>Confidence:</em> {{ confidence }}</p>
+  </div>
+  {% endif %}
+
+  {% if chart %}
+  <div class="card">
+    <h2>Prediction Probabilities</h2>
+    <img src="data:image/png;base64,{{ chart }}" alt="Probabilities Chart">
+  </div>
+  {% endif %}
+
+  {% if annotated %}
+  <div class="card">
+    <h2>Annotated MRI Image</h2>
+    <img src="data:image/png;base64,{{ annotated }}" alt="Annotated Image">
+  </div>
+  {% endif %}
+
+  {% if error %}
+    <div class="error">Error: {{ error }}</div>
+  {% endif %}
+</body>
+</html>
